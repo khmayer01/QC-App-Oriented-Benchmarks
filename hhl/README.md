@@ -1,7 +1,7 @@
 # HHL Algorithm - Prototype Benchmark Program
 
-The HHL (HHL) algorithm [[1]](#references) is ... 
-The HHL algorithm demonstrates a quantum speedup over its classical counterpart for solving linear equations. 
+The Harrow-Hassidim-Lloyd (HHL) algorithm [[1]](#references) is a quantum algorithm for solving a system of linear equations.  
+Under certain conditions [[2]](#references), the algorithm demonstrates a quantum speedup over its classical counterpart. 
 
 NOTE: The remainder of this README needs to be modifed with content for HHL.
 
@@ -167,13 +167,13 @@ https://arxiv.org/abs/1110.2232v2
 
 not correct for HHL:
 
-[1] Ethan Bernstein and Umesh Vazirani. (1997).
-    Quantum Complexity Theory
-    [`doi/10.1137/S0097539796300921`](https://epubs.siam.org/doi/10.1137/S0097539796300921)
+[1] Aram W. Harrow, Avinatan Hassidim and Seth Lloyd. (2009).
+    Quantum Alogirthm for Linear Systems of Equations
+    [`HHL Algorithm`] (https://doi.org/10.1103/PhysRevLett.103.150502)
 
-[2] Michael A. Nielsen and Isaac L. Chuang. (2011).
-    Quantum Computation and Quantum Information: 10th Anniversary Edition (10th ed.). 
-    Cambridge University Press, New York, NY, USA.
+[2] Scott Aaronson (2011).
+    Read the fine print
+    https://www.nature.com/articles/nphys3272
 
 [3] Abraham Asfaw, Antonio Córcoles, Luciano Bello, Yael Ben-Haim, Mehdi Bozzo-Rey, Sergey Bravyi, Nicholas Bronn, Lauren Capelluto, Almudena Carrera Vazquez, Jack Ceroni, Richard Chen, Albert Frisch, Jay Gambetta, Shelly Garion, Leron Gil, Salvador De La Puente Gonzalez, Francis Harkins, Takashi Imamichi, Hwajung Kang, Amir h. Karamlou, Robert Loredo, David McKay, Antonio Mezzacapo, Zlatko Minev, Ramis Movassagh, Giacomo Nannicini, Paul Nation, Anna Phan, Marco Pistoia, Arthur Rattew, Joachim Schaefer, Javad Shabani, John Smolin, John Stenger, Kristan Temme, Madeleine Tod, Stephen Wood, and James Wootton. (2020).
     [`Bernstein-Vazirani Algorithm`](https://qiskit.org/textbook/ch-algorithms/bernstein-vazirani.html)
