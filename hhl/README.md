@@ -6,9 +6,16 @@ Under certain assumptions the algorithm achieves an exponential speedup over its
 NOTE: The remainder of this README needs to be modifed with content for HHL.
 
 ## Problem outline
-Given an N-by-N matrix A along with an N-dimensional vector b, the goal is obtain the solution x to the linear equation <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,Ax=b"/>
-
+Given an N-by-N matrix A along with an N-dimensional vector b, the goal is to obtain the solution x to the linear equation <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,Ax=b"/>
 The HHL algorithm does not quite achieve this, but rather prepares a quantum state |x> whose amplitudes equal the components of x.
+The number of qubits in the quantum register containing |x> is n = log_2(N).
+Suppose the matrix A is s-sparse, meaning that there are at most s non-zero elements in any row or column. Furthermore,
+suppose we are given access to an oracle that can prepare states corresponding to the non-zero elements of A.
+Specifically, such an oracle is a unitary U acting as
+
+<img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,U\ket{a}"/>
+
+U|a>|i>|j> = |a>|i>|j+A_{i,a}>
 
 Suppose we are given access to a black-box Boolean function defined as <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,f(x)=s\cdot\,x\quad(\text{mod}\;2),"/> 
 where <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\begin{align*}s\in\{0,1\}^n\end{align*}\"/> 
