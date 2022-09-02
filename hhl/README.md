@@ -1,11 +1,15 @@
 # HHL Algorithm - Prototype Benchmark Program
 
-The HHL (HHL) algorithm [[1]](#references) is ... 
-The HHL algorithm demonstrates a quantum speedup over its classical counterpart for solving linear equations. 
+The Harrow-Hassidim-Lloyd (HHL) algorithm [[1]](#references) is a quantum algorithm for solving a system of linear equations. 
+Under certain assumptions the algorithm achieves an exponential speedup over its classical counterpart.
 
 NOTE: The remainder of this README needs to be modifed with content for HHL.
 
 ## Problem outline
+Given an N-by-N matrix A along with an N-dimensional vector b, the goal is obtain the solution x to the linear equation <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,Ax=b"/>
+
+The HHL algorithm does not quite achieve this, but rather prepares a quantum state |x> whose amplitudes equal the components of x.
+
 Suppose we are given access to a black-box Boolean function defined as <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,f(x)=s\cdot\,x\quad(\text{mod}\;2),"/> 
 where <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\begin{align*}s\in\{0,1\}^n\end{align*}\"/> 
 is a hidden bit string of length <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,n"/>. 
