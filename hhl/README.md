@@ -9,22 +9,23 @@ NOTE: The remainder of this README needs to be modifed with content for HHL.
 Given an N-by-N matrix A along with an N-dimensional vector b, the goal is to obtain the solution x to the linear equation <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,Ax=b"/>
 The HHL algorithm does not quite achieve this, but rather prepares a quantum state |x> whose amplitudes equal the components of x.
 The number of qubits in the quantum register containing |x> is n = log_2(N).
-Suppose the matrix A is s-sparse, meaning that there are at most s non-zero elements in any row or column. Furthermore,
-suppose we are given access to an oracle that can prepare states corresponding to the non-zero elements of A.
+Suppose the matrix A has condition number (the ratio of the highest to lowest eigenvalue) is k, and
+suppose that A is s-sparse, meaning that there are at most s non-zero elements in any row or column.
+We further assume that we are given access to an oracle that can prepare states corresponding to the non-zero elements of A.
 Specifically, such an oracle is a unitary U acting as
-
-<img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,U|a\rangle|i\rangle|j\rangle=|a\rangle|i\rangle|j+ A_{i,a}\rangle"/>
 
 U|a>|i>|j> = |a>|i>|j+A_{i,a}>
 
-Suppose we are given access to a black-box Boolean function defined as <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,f(x)=s\cdot\,x\quad(\text{mod}\;2),"/> 
-where <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\begin{align*}s\in\{0,1\}^n\end{align*}\"/> 
-is a hidden bit string of length <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,n"/>. 
-Thus the function is guaranteed to return a bitwise product with a hidden string <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}s">. The black-box implements this function by mapping <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,(x,y)\mapsto\big(x,y\oplus\,f(x)\big)\"/>. 
-The goal is to determine the hidden string <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,s"/>.
+where A_{i,a} is the a-th non-zero element in the i-th row of A. We can simplify the oracle by considering unitaries for each a index, that is
+
+U_a|i>|j> = |i>|j+A_{i,a}>
+
+The first register contains n qubits and has dimension equal to N. The second register contains as many qubits as the precision needed to specify an element of A.
+The HHL algorithm then prepares |x> using a circuit of depth O(n*s^2*k^2), which is logarithmic in N as long as s and k are logarithmic in N.  
+
 
 ## Benchmarking
-The Bernstein-Vazirani algorithm is benchmarked by running `max_circuits` circuits for different hidden bitstrings `s_int`, chosen uniformly at random from <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}\{0,1\}^N"> for <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}N"> qubits. Each circuit is repeated a number of times denoted by `num_shots`. We then run the algorithm for numbers of qubits between `min_qubits` and `max_qubits`, inclusive. The test returns the averages of the circuit creation times, average execution times, fidelities, and circuit depths, like all of the other algorithms. For this algorithm's fidelity calculation, as we always have a single correct state, we compare the returned measurements against the distribution that has the single state with 100% probability using our [noise-normalized fidelity calculation](../_doc/POLARIZATION_FIDELITY.md).
+The BHHL algorithm is benchmarked by running `max_circuits` circuits for different hidden bitstrings `s_int`, chosen uniformly at random from <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}\{0,1\}^N"> for <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}N"> qubits. Each circuit is repeated a number of times denoted by `num_shots`. We then run the algorithm for numbers of qubits between `min_qubits` and `max_qubits`, inclusive. The test returns the averages of the circuit creation times, average execution times, fidelities, and circuit depths, like all of the other algorithms. For this algorithm's fidelity calculation, as we always have a single correct state, we compare the returned measurements against the distribution that has the single state with 100% probability using our [noise-normalized fidelity calculation](../_doc/POLARIZATION_FIDELITY.md).
 
 ## Classical algorithm
 Classically, to solve this problem requires appling <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,f"/> to each bitstring belonging to a basis for <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,\{0,1\}^n"/>.
