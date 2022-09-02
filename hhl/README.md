@@ -1,7 +1,7 @@
 # HHL Algorithm - Prototype Benchmark Program
 
-The HHL (HHL) algorithm [[1]](#references) is ... 
-The HHL algorithm demonstrates a quantum speedup over its classical counterpart for solving linear equations. 
+The Harrow-Hassidim-Lloyd (HHL) algorithm [[1]](#references) is a quantum algorithm for solving a system of linear equations. 
+Under certain assumptions the algorithm achieves an exponential speedup over its classical counterpart 
 
 NOTE: The remainder of this README needs to be modifed with content for HHL.
 
