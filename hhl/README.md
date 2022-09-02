@@ -13,7 +13,7 @@ Suppose the matrix A is s-sparse, meaning that there are at most s non-zero elem
 suppose we are given access to an oracle that can prepare states corresponding to the non-zero elements of A.
 Specifically, such an oracle is a unitary U acting as
 
-<img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,U\ket{a}"/>
+<img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,U|a\rangle|i\rangle|j\rangle=|a\rangle|i\rangle|j\xor A_{i,a}\rangle"/>
 
 U|a>|i>|j> = |a>|i>|j+A_{i,a}>
 
