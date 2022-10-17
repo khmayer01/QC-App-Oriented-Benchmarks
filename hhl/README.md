@@ -25,14 +25,17 @@ The HHL algorithm then prepares |x> using a circuit of depth O(n*s^2*k^2), which
 
 
 ## Benchmarking
-The BHHL algorithm is benchmarked by running `max_circuits` circuits for different hidden bitstrings `s_int`, chosen uniformly at random from <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}\{0,1\}^N"> for <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}N"> qubits. Each circuit is repeated a number of times denoted by `num_shots`. We then run the algorithm for numbers of qubits between `min_qubits` and `max_qubits`, inclusive. The test returns the averages of the circuit creation times, average execution times, fidelities, and circuit depths, like all of the other algorithms. For this algorithm's fidelity calculation, as we always have a single correct state, we compare the returned measurements against the distribution that has the single state with 100% probability using our [noise-normalized fidelity calculation](../_doc/POLARIZATION_FIDELITY.md).
+The HHL algorithm makes use on an input quantum register as well as a clock register containing the number of qubits needed to perform the phase-estimation subroutine.
+The algorithm is benchmarked by incrementing up to `max_input_qubits` many input qubits and `max_clock_qubits` many clock qubits.
+For each number of input and clock qubits, `max_circuits` many circuits are chosen at random by generating a random matrix A and vector b.
+Each circuit is repeated a number of times denoted by `num_shots`.
+The test returns the averages of the circuit creation times, average execution times, fidelities, and circuit depths, like all of the other algorithms. For this algorithm's fidelity calculation, we compare the returned measurements against the ideal distribution using our [noise-normalized fidelity calculation](../_doc/POLARIZATION_FIDELITY.md).
+
 
 ## Classical algorithm
-Classically, to solve this problem requires appling <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,f"/> to each bitstring belonging to a basis for <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,\{0,1\}^n"/>.
-For example, the standard basis is <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,\{(1,0,\dots,0),(0,1,0,\dots,0),\dots,(0,\dots,0,1)\} "/>. 
-Each query from a basis bitstring reveals information about one of the bits in <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}s"> due to the linearity of the function <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}f">.
-To determine the hidden string <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}s"> requires <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,n"/> calls to the function <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,f"/>.
-Thus this classical algorithm takes <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}O(n)"> time.
+The best known classical algorithm for producing the vector x is requires Gaussian elimination, and requires <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}O(N^3)"> time.
+
+NOTE: need to add more on classical algorithm under sparsity/condition number assumptions.
 
 ## Quantum algorithm
 Using a quantum algorithm, the problem can be solved with only one call to the oracle, implying a runtime of <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}O(1)">.
