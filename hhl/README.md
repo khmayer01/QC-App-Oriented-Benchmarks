@@ -38,6 +38,14 @@ The best known classical algorithm for producing the vector x is requires Gaussi
 NOTE: need to add more on classical algorithm under sparsity/condition number assumptions.
 
 ## Quantum algorithm
+
+The quantum algorithm begins by performing quantum phase estimation (QPE) with unitary <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}e^{-iA}">.
+The input register is initialized in the state <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|b\rangle">, and the clock register in an equal superposition state.
+
+<p align="center">
+    <img src="https://latex.codecogs.com/svg.latex?\pagecolor{white}|\psi\rangle = \frac{1}{\sqrt{T}}\sum_{t=0}^{T-1}|t\rangle |b\rangle ">
+</p>
+
 Using a quantum algorithm, the problem can be solved with only one call to the oracle, implying a runtime of <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}O(1)">.
 This requires <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}f"> to be implemented as a quantum
 oracle. The quantum oracle for the function <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,f"/> 
