@@ -85,26 +85,30 @@ The steps for the HHL algorithm are the following, with the state after each ste
    second register has <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n_c"> clock qubits initialized to <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|0\rangle"/>.
    
    <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_0\rangle=|0\rangle^{\otimes{n}}|1\rangle{\otimes{n_c}}"/>
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_0\rangle=|b\rangle}|0\rangle^{\otimes{n_c}}"/>
    </p>
    
-2. Apply the Hadamard gate to all clock qubits, creating an equal superposition state <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^n_c-1}|t\rangle"/> in the clock register.
+2. Apply the Hadamard gate to all clock qubits, creating an equal superposition state <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}|t\rangle"/> in the clock register.
    
    <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_1\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^n_c-1}|b\rangle|t\rangle"/>
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_1\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}|b\rangle|t\rangle"/>
    </p>
    
 
 3. Apply the Hamiltonian simulation <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}e^{-iHt}"> to the clock qubits, controlled on the value of t.
-   <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}U_f|x\rangle|y\rangle=|x\rangle|y\otimes{f}(x)\rangle"> thus
    
    <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_2\rangle=\frac{1}{\sqrt{2^{n+1}}}\sum_{x=0}^{2^n-1}|x\rangle(|{f(x)}\rangle{-}|1\oplus{f(x)}\rangle)"/>
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_2\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}e^{-iAt}|b\rangle|t\rangle"/>
    </p>
    
    <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_2\rangle=\frac{1}{\sqrt{2^{n+1}}}\sum_{x=0}^{2^n-1}(-1)^{f(x)}|x\rangle(|0\rangle{-}|1\rangle)"/>
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_2\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}\sum_j \beta_j e^{-iAt}|\mu_j\rangle|t\rangle"/>
    </p>
+   
+   <p align="center">
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_2\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}\sum_j \beta_j e^{-i\lambda_j t}|\mu_j\rangle|t\rangle"/>
+   </p>
+   
 4. Apply the Hadamard gate to all <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n"> data qubits in the first register.
    
    <p align="center">
