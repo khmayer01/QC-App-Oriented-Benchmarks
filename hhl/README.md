@@ -6,22 +6,12 @@ Under certain assumptions the algorithm achieves an exponential speedup over its
 NOTE: The remainder of this README needs to be modifed with content for HHL.
 
 ## Problem outline
-Given an N-by-N matrix A along with an N-dimensional vector b, the goal is to obtain the solution x to the linear equation <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,Ax=b"/>
-The HHL algorithm does not quite achieve this, but rather prepares a quantum state |x> whose amplitudes equal the components of x.
-The number of qubits in the quantum register containing |x> is n = log_2(N).
-Suppose the matrix A has condition number (the ratio of the highest to lowest eigenvalue) is k, and
-suppose that A is s-sparse, meaning that there are at most s non-zero elements in any row or column.
-We further assume that we are given access to an oracle that can prepare states corresponding to the non-zero elements of A.
-Specifically, such an oracle is a unitary U acting as
-
-U|a>|i>|j> = |a>|i>|j+A_{i,a}>
-
-where A_{i,a} is the a-th non-zero element in the i-th row of A. We can simplify the oracle by considering unitaries for each a index, that is
-
-U_a|i>|j> = |i>|j+A_{i,a}>
-
-The first register contains n qubits and has dimension equal to N. The second register contains as many qubits as the precision needed to specify an element of A.
-The HHL algorithm then prepares |x> using a circuit of depth O(n*s^2*k^2), which is logarithmic in N as long as s and k are logarithmic in N.  
+Given a matrix A along with a vector b, the goal is to obtain the solution x to the linear equation <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,Ax=b"/>.
+The HHL algorithm prepares a quantum state |x> whose amplitudes equal the components of x, starting from an initial state |b>.
+For an N-by-N matrix A, with N=2^n, the number of qubits in the quantum register containing |x> is n.
+Let k be the condition number of A, which is the ratio of the highest to lowest eigenvalue of A.
+Also, let s be the sparsity of A, which is the largest number of non-zero elements in any row or column.
+The HHL algorithm then prepares |x> using a circuit of depth O(n*s^2*k^2), which is logarithmic in N as long as s and k are logarithmic in N.
 
 
 ## Benchmarking
@@ -33,17 +23,18 @@ The test returns the averages of the circuit creation times, average execution t
 
 
 ## Classical algorithm
-The best known classical algorithm for producing the vector x is requires Gaussian elimination, and requires <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}O(N^3)"> time.
+The standard classical algorithm for producing the vector x uses Gaussian elimination, and requires <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}O(N^3)"> time.
+There are more efficient classical algorithms but these all require a time polynomial in N.
 
 NOTE: need to add more on classical algorithm under sparsity/condition number assumptions.
 
 ## Quantum algorithm
 
-The quantum algorithm begins by performing quantum phase estimation (QPE) with unitary <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}e^{-iA}">.
+The quantum algorithm begins by performing quantum phase estimation (QPE) with unitary <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}U = e^{-iA}">.
 The input register is initialized in the state <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|b\rangle">, and the clock register in an equal superposition state.
 
 <p align="center">
-    <img src="https://latex.codecogs.com/svg.latex?\pagecolor{white}|\psi\rangle = \frac{1}{\sqrt{T}}\sum_{t=0}^{T-1}|t\rangle |b\rangle ">
+    <img src="https://latex.codecogs.com/svg.latex?\pagecolor{white}|\psi\rangle = \frac{1}{\sqrt{T}}\sum_{t=0}^{T-1}|t\rangle |b\rangle \">
 </p>
 
 Using a quantum algorithm, the problem can be solved with only one call to the oracle, implying a runtime of <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}O(1)">.
