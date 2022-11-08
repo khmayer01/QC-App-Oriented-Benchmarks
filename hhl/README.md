@@ -79,24 +79,23 @@ with IBM's Quantum Composer and can be analyzed
 
 ### Algorithm Steps
 
-The steps for the BV algorithm are the following, with the state after each step, <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_n\rangle">:
+The steps for the HHL algorithm are the following, with the state after each step, <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_n\rangle">:
 
-1. Initialize two quantum registers. The first register has <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n"> data qubits  initialized to <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|0\rangle"/> and the 
-   second register has one ancilla qubit initialized to <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|1\rangle"/>.
+1. Initialize two quantum registers. The first register has <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n"> data qubits  initialized to <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|b\rangle"/> and the 
+   second register has <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n_c"> clock qubits initialized to <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|0\rangle"/>.
    
    <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_0\rangle=|0\rangle^{\otimes{n}}|1\rangle"/>
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_0\rangle=|0\rangle^{\otimes{n}}|1\rangle{\otimes{n_c}}"/>
    </p>
    
-2. Apply the Hadamard gate to all qubits, creating an equal superposition state <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}\frac{1}{\sqrt{2^{n}}}\sum_{x=0}^{2^n-1}|x\rangle"/> in the first register and
-   <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|-\rangle=\frac{1}{\sqrt{2}}\big(|0\rangle-1\rangle\big)"> in the second.
+2. Apply the Hadamard gate to all clock qubits, creating an equal superposition state <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^n_c-1}|t\rangle"/> in the clock register.
    
    <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_1\rangle=\frac{1}{\sqrt{2^{n+1}}}\sum_{x=0}^{2^n-1}|x\rangle(|0\rangle{-}|1\rangle)"/>
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_1\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^n_c-1}|b\rangle|t\rangle"/>
    </p>
    
 
-3. Apply the oracle <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}U_f"> to the data and ancilla qubits. Recall
+3. Apply the Hamiltonian simulation <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}e^{-iHt}"> to the clock qubits, controlled on the value of t.
    <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}U_f|x\rangle|y\rangle=|x\rangle|y\otimes{f}(x)\rangle"> thus
    
    <p align="center">
