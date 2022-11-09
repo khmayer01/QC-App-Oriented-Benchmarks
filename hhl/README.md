@@ -85,7 +85,7 @@ The steps for the HHL algorithm are the following, with the state after each ste
    second register has <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n_c"> clock qubits initialized to <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|0\rangle"/>.
    
    <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_0\rangle=|b\rangle}|0\rangle^{\otimes{n_c}}"/>
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_0\rangle=|b\rangle|0\rangle^{\otimes{n_c}}"/>
    </p>
    
 2. Apply the Hadamard gate to all clock qubits, creating an equal superposition state <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}|t\rangle"/> in the clock register.
