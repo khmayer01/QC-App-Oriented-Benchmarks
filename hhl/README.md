@@ -108,22 +108,20 @@ The steps for the HHL algorithm are the following, with the state after each ste
    <p align="center">
    <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_2\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}\sum_j \beta_j e^{-i\lambda_j t}|\mu_j\rangle|t\rangle"/>
    </p>
-   
-4. Apply the Hadamard gate to all <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n"> data qubits in the first register.
+
+4. Apply an inverse QFT to the clock register.
+
+<p align="center">
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_3\rangle=\sum_j \beta_j |\mu_j\rangle|\lambda_j\rangle"/>
+   </p>
+
+5. Append an ancilla register with one qubit initialized to <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|0\rangle">. Perform a rotation R_y(theta) on the ancilla with sin(theta/2) = C/lambda_j.
    
    <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_3\rangle=\frac{1}{2^n}\sum_{x=0}^{2^n-1}(-1)^{f(x)}\bigg{[}\sum_{z=0}^{2^n-1}(-1)^{x\cdot{z}}\bigg{]}|z\rangle\frac{(|0\rangle{-}|1\rangle)}{\sqrt{2}}"/>
+   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_3\rangle=\sum_j \beta_j |\mu_j\rangle|\lambda_j\rangle (\sqrt{1-\frac{C^2}{\lambda_j}}|0\rangle + \frac{C}{\lambda_j}|1\rangle)"/>
    </p>
    
-   <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_3\rangle=\frac{1}{2^n}\sum_{x=0}^{2^n-1}\sum_{z=0}^{2^n-1}(-1)^{x\cdot{s}+x\cdot{z}}|z\rangle|-\rangle"/>
-   </p>
-  
-   <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_3\rangle=|s\rangle|-\rangle"/>
-   </p>
-   
-5. Measure the data qubits and the result is the bitstring <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}s">.
+6. Measure the ancilla qubit and proceed if the outcome is <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|1\rangle">.
 
 ## Gate Implementation
 For a given bitstring <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,s"/>, the quantum oracle <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,U_f"/> for the function <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\begin{align*}f(x)=s\cdot\,x\end{align*}\"> is implemented as a product of CNOT gates according to
