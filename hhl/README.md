@@ -79,14 +79,10 @@ with IBM's Quantum Composer and can be analyzed
 
 ### Algorithm Steps
 
-The steps for the HHL algorithm are the following, with the state after each step, <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_n\rangle">:
+The steps for the HHL algorithm are the following, with the state after each step, $|\psi_n\rangle$ <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_n\rangle">:
 
 1. Initialize two quantum registers. The first register has <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n"> data qubits  initialized to <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|b\rangle"/> and the 
    second register has <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n_c"> clock qubits initialized to <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|0\rangle"/>.
-   
-   <p align="center">
-   <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|\psi_0\rangle=|b\rangle|0\rangle^{\otimes{n_c}}"/>
-   </p>
    
    $$|\psi_0\rangle=|b\rangle|0\rangle^{\otimes{n_c}}$$
    
