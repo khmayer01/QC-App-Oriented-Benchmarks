@@ -86,18 +86,18 @@ The steps for the HHL algorithm are the following, with the state after each ste
    
    $$|\psi_0\rangle=|b\rangle|0\rangle^{\otimes{n_c}}$$
    
-2. Apply the Hadamard gate to all clock qubits, creating an equal superposition state $\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}|t\rangle$ in the clock register.
+2. Apply the Hadamard gate to all clock qubits, creating an equal superposition state in the clock register.
 
   $$|\psi_1\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}|b\rangle|t\rangle$$
    
 
-3. Apply the Hamiltonian simulation $e^{-iHt}$ to the clock qubits, controlled on the value of $t$.
+3. Apply the Hamiltonian simulation $e^{-iAt}$ to the clock qubits, controlled on the value of $t$.
    
    $$|\psi_2\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}e^{-iAt}|b\rangle|t\rangle$$
    
-   $$|\psi_2\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}\sum_j \beta_j e^{-iAt}|\mu_j\rangle|t\rangle$$
+   $$=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}\sum_j \beta_j e^{-iAt}|\mu_j\rangle|t\rangle$$
    
-   $$|\psi_2\rangle=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}\sum_j \beta_j e^{-i\lambda_j t}|\mu_j\rangle|t\rangle$$
+   $$=\frac{1}{\sqrt{2^{n_c}}}\sum_{t=0}^{2^{n_c}-1}\sum_j \beta_j e^{-i\lambda_j t}|\mu_j\rangle|t\rangle$$
    
 
 4. Apply an inverse QFT to the clock register.
@@ -105,15 +105,22 @@ The steps for the HHL algorithm are the following, with the state after each ste
 $$|\psi_3\rangle=\sum_j \beta_j |\mu_j\rangle|\lambda_j\rangle$$
 
 
-5. Append an ancilla register with one qubit initialized to $|0\rangle$. Perform a rotation $R_y(\theta)$ on the ancilla with $sin(theta/2) = C/lambda_j$, where $C$ is a lower bound on the smallest eigenvalue of $A$.
+5. Append an ancilla register with one qubit initialized to $|0\rangle$. Perform a rotation $R_y(\theta)$ on the ancilla with $\sin(\theta/2) = C/\lambda_j$, where $C$ is a lower bound on the smallest eigenvalue of $A$.
    
-   $$|\psi_3\rangle=\sum_j \beta_j |\mu_j\rangle|\lambda_j\rangle (\sqrt{1-\frac{C^2}{\lambda_j}}|0\rangle + \frac{C}{\lambda_j}|1\rangle)$$
+   $$|\psi_3\rangle=\sum_j \beta_j |\mu_j\rangle|\lambda_j\rangle \big(\sqrt{1-\frac{C^2}{\lambda_j}}|0\rangle + \frac{C}{\lambda_j}|1\rangle\big)$$
   
    
 6. Measure the ancilla qubit and proceed if the outcome is $|1\rangle$. Conditioned on this outcome, the remaining state of the data and clock qubits is
 
-   $$|\psi_4\rangle=\mathcal{N}\sum_j \beta_j \frac{C}{\lambda_j}|\mu_j\rangle|\lambda_j\rangle$$ 
+   $$|\psi_4\rangle=\mathcal{N}\sum_j \beta_j \frac{C}{\lambda_j}|\mu_j\rangle|\lambda_j\rangle$$
+   
+7. Uncompute steps 2-4.
 
+    $$|\psi_5\rangle=\mathcal{N}\sum_j \beta_j \frac{C}{\lambda_j}|\mu_j\rangle|0\rangle$$
+    
+    $$ = \mathcal{N}C A^{-1}|b\rangle|0\rangle $$
+    
+    
 ## Gate Implementation
 For a given bitstring <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,s"/>, the quantum oracle <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,U_f"/> for the function <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\begin{align*}f(x)=s\cdot\,x\end{align*}\"> is implemented as a product of CNOT gates according to
 <p align="center">
