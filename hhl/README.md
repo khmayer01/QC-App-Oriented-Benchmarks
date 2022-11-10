@@ -112,13 +112,15 @@ $$|\psi_3\rangle=\sum_j \beta_j |\mu_j\rangle|\lambda_j\rangle$$
    
 6. Measure the ancilla qubit and proceed if the outcome is $|1\rangle$. Conditioned on this outcome, the remaining state of the data and clock qubits is
 
-   $$|\psi_4\rangle=\mathcal{N}\sum_j \beta_j \frac{C}{\lambda_j}|\mu_j\rangle|\lambda_j\rangle$$
+   $$|\psi_4\rangle=\mathcal{N}\sum_j \beta_j \frac{1}{\lambda_j}|\mu_j\rangle|\lambda_j\rangle$$
    
 7. Uncompute steps 2-4.
 
-    $$|\psi_5\rangle=\mathcal{N}\sum_j \beta_j \frac{C}{\lambda_j}|\mu_j\rangle|0\rangle$$
+    $$|\psi_5\rangle=\mathcal{N}\sum_j \beta_j \frac{1}{\lambda_j}|\mu_j\rangle|0\rangle$$
     
-    $$ = \mathcal{N}C A^{-1}|b\rangle|0\rangle $$
+    $$ = \mathcal{N} A^{-1}|b\rangle|0\rangle $$
+    
+Up to an overall normalization $\mathcal{N}$, the state of the data qubits now equals the solution vector $|x\rangle=A^{-1}|b\rangle$.
     
     
 ## Gate Implementation
