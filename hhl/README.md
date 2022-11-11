@@ -6,49 +6,32 @@ Under certain assumptions the algorithm achieves an exponential speedup over its
 NOTE: The remainder of this README needs to be modifed with content for HHL.
 
 ## Problem outline
-Given a matrix A along with a vector b, the goal is to obtain the solution x to the linear equation <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,Ax=b"/>.
-The HHL algorithm prepares a quantum state |x> whose amplitudes equal the components of x, starting from an initial state |b>.
-For an N-by-N matrix A, with N=2^n, the number of qubits in the quantum register containing |x> is n.
-Let k be the condition number of A, which is the ratio of the highest to lowest eigenvalue of A.
-Also, let s be the sparsity of A, which is the largest number of non-zero elements in any row or column.
-The HHL algorithm then prepares |x> using a circuit of depth O(n*s^2*k^2), which is logarithmic in N as long as s and k are logarithmic in N.
+Given a matrix $A$ along with a vector $b$, the goal is to obtain the solution $x$ to the linear equation $Ax=b$.
+The HHL algorithm prepares a quantum state $|x>$ whose amplitudes equal the components of $x$, starting from an initial state $|b>$.
+For an $N$-by-$N$ matrix $A$, with $N=2^n$, the number of qubits in the quantum register containing $|x>$ is $n$.
+Let $k$ be the condition number of $A$, which is the ratio of the highest to lowest eigenvalue of $A$.
+Also, let $s$ be the sparsity of $A$, which is the largest number of non-zero elements in any row or column.
+The HHL algorithm then prepares $|x>$ using a circuit of depth $O(n*s^2*k^2)$, which is logarithmic in $N$ as long as $s$ and $k$ are logarithmic in $N$.
 
 
 ## Benchmarking
 The HHL algorithm makes use on an input quantum register as well as a clock register containing the number of qubits needed to perform the phase-estimation subroutine.
 The algorithm is benchmarked by incrementing up to `max_input_qubits` many input qubits and `max_clock_qubits` many clock qubits.
-For each number of input and clock qubits, `max_circuits` many circuits are chosen at random by generating a random matrix A and vector b.
+For each number of input and clock qubits, `max_circuits` many circuits are chosen at random by generating a random matrix $A$ and vector $b$.
 Each circuit is repeated a number of times denoted by `num_shots`.
 The test returns the averages of the circuit creation times, average execution times, fidelities, and circuit depths, like all of the other algorithms. For this algorithm's fidelity calculation, we compare the returned measurements against the ideal distribution using our [noise-normalized fidelity calculation](../_doc/POLARIZATION_FIDELITY.md).
 
 
 ## Classical algorithm
-The standard classical algorithm for producing the vector x uses Gaussian elimination, and requires <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}O(N^3)"> time.
-There are more efficient classical algorithms but these all require a time polynomial in N.
+The standard classical algorithm for producing the vector $x$ uses Gaussian elimination, and requires $O(N^3)$ time.
+There are more efficient classical algorithms but these all require a time polynomial in $N$.
 
 NOTE: need to add more on classical algorithm under sparsity/condition number assumptions.
 
 ## Quantum algorithm
 
-The quantum algorithm begins by performing quantum phase estimation (QPE) with unitary <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}U = e^{-iA}">.
-The input register is initialized in the state <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}|b\rangle">, and the clock register in an equal superposition state.
-
-<p align="center">
-    <img src="https://latex.codecogs.com/svg.latex?\pagecolor{white}|\psi\rangle = \frac{1}{\sqrt{T}}\sum_{t=0}^{T-1}|t\rangle |b\rangle \">
-</p>
-
-Using a quantum algorithm, the problem can be solved with only one call to the oracle, implying a runtime of <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}O(1)">.
-This requires <img align="center" src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}f"> to be implemented as a quantum
-oracle. The quantum oracle for the function <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,f"/> 
-is a unitary <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,U_f"/> that acts on a 
-<img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,n"/> data qubits 
-and 1 ancilla qubit such that
-
-<p align="center">
-    <img src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\,U_f|x\rangle|y\rangle=|x\rangle|y\otimes\,f(x)\rangle.\">
-</p>
-
-The bitstring <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,s"/> determines the oracle <img align="center" src="https://latex.codecogs.com/svg.latex?\pagecolor{white}\small\,U_f"/>.
+The quantum algorithm begins by performing quantum phase estimation (QPE) with unitary $e^{-iA}$.
+The input register is initialized in the state $|b\rangle$, and the clock register in an equal superposition state.
 
 ### General Quantum Circuit
 The following circuit is the general quantum circuit for the BV algorithm with <img align=center src="https://latex.codecogs.com/svg.latex?\small\pagecolor{white}n"> data qubits
@@ -64,18 +47,6 @@ being in the definition and implementation of the oracle <img src="https://latex
 References [[2]](#references) and [[3]](#references) both have overviews of the mathematical details of the 
 algorithm, but the key points will be reproduced here.
 
-### Algorithmic Visualization
-
-<p align="center">
-<img align=center src="../_doc/images/bernstein-vazirani/bv_gif.gif"  width="700" />
-</p>
-
-*Fig 2. Visualization of quantum circuit executing for Bernstein-Vazirani Algorithm. The visualization
-demonstrates how each qubit and state evolves throughout the algorithm. Visualization created
-with IBM's Quantum Composer and can be analyzed
-[here](https://quantum-computing.ibm.com/composer/files/new?initial=N4IgdghgtgpiBcIBCA1ABAQQDYHMD2ATgJYAuAFlCADQgCOEAzpYgPIAKAogHICKGAygFk0AJgB0ABgDcAHTBEwAYywBXACYw0MujCxEARgEYxCxdtlg5tAjBxpaAbQBsAXQuKbdxc7dy5%2BiAJiGAJ7BwlfMACgohCww0jo4NDHEUTA5LCAZnSYuMcAFkiADzCAVkiyMIiLKscE2rC0xsccloci9oqLJNiU8NzM%2BsG%2BppH8hzb-DNHC8f7uuSI1asjl%2BMjFUtSXKkdF%2BRXHGqWjhwbTsfdtyd39%2BdWemYmLqOf%2B5um8-qm377DOl8hg4DnUBu1XmDPmAwb8wYCYeUSkiLLBGCobKs0ABaAB8aG8JzAaIYGM0wxx%2BO8rxJZLGlIJDmhtMxrRcDO8vxZ5I67LxjM61BAGgYHiIAAcSEQ8GAECAQABfIA).*
-
-[//]: # (For more information about reading these circuit diagrams, visit internal documentation or link to qiskit circuit composer. We likely need to include information about Bloch sphere reading to really make this a useful visualization.)
 
 ### Algorithm Steps
 
